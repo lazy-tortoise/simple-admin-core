@@ -204,7 +204,12 @@
 		"updateTaskLog": "更新任务日志",
 		"deleteTaskLog": "删除任务日志",
 		"getTaskLogList": "获取任务日志列表",
-		"getTaskLogById": "通过ID获取任务日志"
+		"getTaskLogById": "通过ID获取任务日志",
+		"createTenant": "创建租户",
+		"updateTenant": "更新租户",
+		"deleteTenant": "删除租户",
+		"getTenantList": "获取租户列表",
+		"getTenantById": "通过ID获取租户"
 	},
 	"route": {
 		"dashboard": "控制台",

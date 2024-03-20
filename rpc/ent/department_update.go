@@ -84,6 +84,27 @@ func (du *DepartmentUpdate) AddSort(u int32) *DepartmentUpdate {
 	return du
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (du *DepartmentUpdate) SetTenantID(i int) *DepartmentUpdate {
+	du.mutation.ResetTenantID()
+	du.mutation.SetTenantID(i)
+	return du
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (du *DepartmentUpdate) SetNillableTenantID(i *int) *DepartmentUpdate {
+	if i != nil {
+		du.SetTenantID(*i)
+	}
+	return du
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (du *DepartmentUpdate) AddTenantID(i int) *DepartmentUpdate {
+	du.mutation.AddTenantID(i)
+	return du
+}
+
 // SetName sets the "name" field.
 func (du *DepartmentUpdate) SetName(s string) *DepartmentUpdate {
 	du.mutation.SetName(s)
@@ -351,6 +372,12 @@ func (du *DepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := du.mutation.AddedSort(); ok {
 		_spec.AddField(department.FieldSort, field.TypeUint32, value)
 	}
+	if value, ok := du.mutation.TenantID(); ok {
+		_spec.SetField(department.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := du.mutation.AddedTenantID(); ok {
+		_spec.AddField(department.FieldTenantID, field.TypeInt, value)
+	}
 	if value, ok := du.mutation.Name(); ok {
 		_spec.SetField(department.FieldName, field.TypeString, value)
 	}
@@ -565,6 +592,27 @@ func (duo *DepartmentUpdateOne) SetNillableSort(u *uint32) *DepartmentUpdateOne 
 // AddSort adds u to the "sort" field.
 func (duo *DepartmentUpdateOne) AddSort(u int32) *DepartmentUpdateOne {
 	duo.mutation.AddSort(u)
+	return duo
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (duo *DepartmentUpdateOne) SetTenantID(i int) *DepartmentUpdateOne {
+	duo.mutation.ResetTenantID()
+	duo.mutation.SetTenantID(i)
+	return duo
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (duo *DepartmentUpdateOne) SetNillableTenantID(i *int) *DepartmentUpdateOne {
+	if i != nil {
+		duo.SetTenantID(*i)
+	}
+	return duo
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (duo *DepartmentUpdateOne) AddTenantID(i int) *DepartmentUpdateOne {
+	duo.mutation.AddTenantID(i)
 	return duo
 }
 
@@ -864,6 +912,12 @@ func (duo *DepartmentUpdateOne) sqlSave(ctx context.Context) (_node *Department,
 	}
 	if value, ok := duo.mutation.AddedSort(); ok {
 		_spec.AddField(department.FieldSort, field.TypeUint32, value)
+	}
+	if value, ok := duo.mutation.TenantID(); ok {
+		_spec.SetField(department.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := duo.mutation.AddedTenantID(); ok {
+		_spec.AddField(department.FieldTenantID, field.TypeInt, value)
 	}
 	if value, ok := duo.mutation.Name(); ok {
 		_spec.SetField(department.FieldName, field.TypeString, value)

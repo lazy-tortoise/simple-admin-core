@@ -25,6 +25,8 @@ type Token struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// Status 1: normal 2: ban | 状态 1 正常 2 禁用
 	Status uint8 `json:"status,omitempty"`
+	// Tenant ID | 租户ID
+	TenantID int `json:"tenant_id,omitempty"`
 	//  User's UUID | 用户的UUID
 	UUID uuid.UUID `json:"uuid,omitempty"`
 	// Username | 用户名
@@ -43,7 +45,7 @@ func (*Token) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case token.FieldStatus:
+		case token.FieldStatus, token.FieldTenantID:
 			values[i] = new(sql.NullInt64)
 		case token.FieldUsername, token.FieldToken, token.FieldSource:
 			values[i] = new(sql.NullString)
@@ -89,6 +91,12 @@ func (t *Token) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				t.Status = uint8(value.Int64)
+			}
+		case token.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+			} else if value.Valid {
+				t.TenantID = int(value.Int64)
 			}
 		case token.FieldUUID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
@@ -164,6 +172,9 @@ func (t *Token) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("status=")
 	builder.WriteString(fmt.Sprintf("%v", t.Status))
+	builder.WriteString(", ")
+	builder.WriteString("tenant_id=")
+	builder.WriteString(fmt.Sprintf("%v", t.TenantID))
 	builder.WriteString(", ")
 	builder.WriteString("uuid=")
 	builder.WriteString(fmt.Sprintf("%v", t.UUID))

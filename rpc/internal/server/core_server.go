@@ -16,6 +16,7 @@ import (
 	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/oauthprovider"
 	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/position"
 	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/role"
+	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/tenant"
 	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/token"
 	"github.com/suyuan32/simple-admin-core/rpc/internal/logic/user"
 	"github.com/suyuan32/simple-admin-core/rpc/internal/svc"
@@ -268,6 +269,32 @@ func (s *CoreServer) GetRoleById(ctx context.Context, in *core.IDReq) (*core.Rol
 func (s *CoreServer) DeleteRole(ctx context.Context, in *core.IDsReq) (*core.BaseResp, error) {
 	l := role.NewDeleteRoleLogic(ctx, s.svcCtx)
 	return l.DeleteRole(in)
+}
+
+// Tenant management
+func (s *CoreServer) CreateTenant(ctx context.Context, in *core.TenantInfo) (*core.BaseIDResp, error) {
+	l := tenant.NewCreateTenantLogic(ctx, s.svcCtx)
+	return l.CreateTenant(in)
+}
+
+func (s *CoreServer) UpdateTenant(ctx context.Context, in *core.TenantInfo) (*core.BaseResp, error) {
+	l := tenant.NewUpdateTenantLogic(ctx, s.svcCtx)
+	return l.UpdateTenant(in)
+}
+
+func (s *CoreServer) GetTenantList(ctx context.Context, in *core.TenantListReq) (*core.TenantListResp, error) {
+	l := tenant.NewGetTenantListLogic(ctx, s.svcCtx)
+	return l.GetTenantList(in)
+}
+
+func (s *CoreServer) GetTenantById(ctx context.Context, in *core.IDReq) (*core.TenantInfo, error) {
+	l := tenant.NewGetTenantByIdLogic(ctx, s.svcCtx)
+	return l.GetTenantById(in)
+}
+
+func (s *CoreServer) DeleteTenant(ctx context.Context, in *core.IDsReq) (*core.BaseResp, error) {
+	l := tenant.NewDeleteTenantLogic(ctx, s.svcCtx)
+	return l.DeleteTenant(in)
 }
 
 // Token management

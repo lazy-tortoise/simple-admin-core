@@ -23,6 +23,7 @@ import (
 	smsprovider "github.com/suyuan32/simple-admin-core/api/internal/handler/smsprovider"
 	task "github.com/suyuan32/simple-admin-core/api/internal/handler/task"
 	tasklog "github.com/suyuan32/simple-admin-core/api/internal/handler/tasklog"
+	tenant "github.com/suyuan32/simple-admin-core/api/internal/handler/tenant"
 	token "github.com/suyuan32/simple-admin-core/api/internal/handler/token"
 	user "github.com/suyuan32/simple-admin-core/api/internal/handler/user"
 	"github.com/suyuan32/simple-admin-core/api/internal/svc"
@@ -771,6 +772,40 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodPost,
 					Path:    "/email/send",
 					Handler: messagesender.SendEmailHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Authority},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/tenant/create",
+					Handler: tenant.CreateTenantHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/tenant/update",
+					Handler: tenant.UpdateTenantHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/tenant/delete",
+					Handler: tenant.DeleteTenantHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/tenant/list",
+					Handler: tenant.GetTenantListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/tenant",
+					Handler: tenant.GetTenantByIdHandler(serverCtx),
 				},
 			}...,
 		),

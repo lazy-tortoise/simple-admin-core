@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
+	mixins2 "github.com/suyuan32/simple-admin-core/rpc/ent/schema/mixins"
 
 	"github.com/suyuan32/simple-admin-common/orm/ent/mixins"
 )
@@ -49,6 +50,7 @@ func (OauthProvider) Fields() []ent.Field {
 func (OauthProvider) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.IDMixin{},
+		mixins2.TenantMixin{},
 	}
 }
 

@@ -7,6 +7,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 	"github.com/gofrs/uuid/v5"
+	mixins2 "github.com/suyuan32/simple-admin-core/rpc/ent/schema/mixins"
 
 	"github.com/suyuan32/simple-admin-common/orm/ent/mixins"
 )
@@ -40,6 +41,7 @@ func (Token) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.UUIDMixin{},
 		mixins.StatusMixin{},
+		mixins2.TenantMixin{},
 	}
 }
 

@@ -41,6 +41,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
 		{Name: "sort", Type: field.TypeUint32, Comment: "Sort Number | 排序编号", Default: 1},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
 		{Name: "name", Type: field.TypeString, Comment: "Department name | 部门名称"},
 		{Name: "ancestors", Type: field.TypeString, Nullable: true, Comment: "Parents' IDs | 父级列表"},
 		{Name: "leader", Type: field.TypeString, Comment: "Department leader | 部门负责人"},
@@ -57,7 +58,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_departments_sys_departments_children",
-				Columns:    []*schema.Column{SysDepartmentsColumns[11]},
+				Columns:    []*schema.Column{SysDepartmentsColumns[12]},
 				RefColumns: []*schema.Column{SysDepartmentsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -187,6 +188,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
 		{Name: "sort", Type: field.TypeUint32, Comment: "Sort Number | 排序编号", Default: 1},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
 		{Name: "name", Type: field.TypeString, Comment: "Position Name | 职位名称"},
 		{Name: "code", Type: field.TypeString, Comment: "The code of position | 职位编码"},
 		{Name: "remark", Type: field.TypeString, Nullable: true, Comment: "Remark | 备注"},
@@ -200,7 +202,7 @@ var (
 			{
 				Name:    "position_code",
 				Unique:  true,
-				Columns: []*schema.Column{SysPositionsColumns[6]},
+				Columns: []*schema.Column{SysPositionsColumns[7]},
 			},
 		},
 	}
@@ -210,6 +212,7 @@ var (
 		{Name: "created_at", Type: field.TypeTime, Comment: "Create Time | 创建日期"},
 		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
 		{Name: "name", Type: field.TypeString, Comment: "Role name | 角色名"},
 		{Name: "code", Type: field.TypeString, Unique: true, Comment: "Role code for permission control in front end | 角色码，用于前端权限控制"},
 		{Name: "default_router", Type: field.TypeString, Comment: "Default menu : dashboard | 默认登录页面", Default: "dashboard"},
@@ -225,7 +228,29 @@ var (
 			{
 				Name:    "role_code",
 				Unique:  true,
-				Columns: []*schema.Column{SysRolesColumns[5]},
+				Columns: []*schema.Column{SysRolesColumns[6]},
+			},
+		},
+	}
+	// SysTenantsColumns holds the columns for the "sys_tenants" table.
+	SysTenantsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeUint64, Increment: true},
+		{Name: "created_at", Type: field.TypeTime, Comment: "Create Time | 创建日期"},
+		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
+		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
+		{Name: "name", Type: field.TypeString, Unique: true, Comment: "Tenant name | 租户名称"},
+	}
+	// SysTenantsTable holds the schema information for the "sys_tenants" table.
+	SysTenantsTable = &schema.Table{
+		Name:       "sys_tenants",
+		Columns:    SysTenantsColumns,
+		PrimaryKey: []*schema.Column{SysTenantsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "tenant_tenant_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysTenantsColumns[4]},
 			},
 		},
 	}
@@ -235,6 +260,7 @@ var (
 		{Name: "created_at", Type: field.TypeTime, Comment: "Create Time | 创建日期"},
 		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
 		{Name: "uuid", Type: field.TypeUUID, Comment: " User's UUID | 用户的UUID"},
 		{Name: "username", Type: field.TypeString, Comment: "Username | 用户名", Default: "unknown"},
 		{Name: "token", Type: field.TypeString, Comment: "Token string | Token 字符串"},
@@ -250,12 +276,12 @@ var (
 			{
 				Name:    "token_uuid",
 				Unique:  false,
-				Columns: []*schema.Column{SysTokensColumns[4]},
+				Columns: []*schema.Column{SysTokensColumns[5]},
 			},
 			{
 				Name:    "token_expired_at",
 				Unique:  false,
-				Columns: []*schema.Column{SysTokensColumns[8]},
+				Columns: []*schema.Column{SysTokensColumns[9]},
 			},
 		},
 	}
@@ -266,6 +292,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Comment: "Update Time | 修改日期"},
 		{Name: "status", Type: field.TypeUint8, Nullable: true, Comment: "Status 1: normal 2: ban | 状态 1 正常 2 禁用", Default: 1},
 		{Name: "deleted_at", Type: field.TypeTime, Nullable: true, Comment: "Delete Time | 删除日期"},
+		{Name: "tenant_id", Type: field.TypeInt, Comment: "Tenant ID | 租户ID", Default: 0},
 		{Name: "username", Type: field.TypeString, Unique: true, Comment: "User's login name | 登录名"},
 		{Name: "password", Type: field.TypeString, Comment: "Password | 密码"},
 		{Name: "nickname", Type: field.TypeString, Unique: true, Comment: "Nickname | 昵称"},
@@ -284,7 +311,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_users_sys_departments_departments",
-				Columns:    []*schema.Column{SysUsersColumns[13]},
+				Columns:    []*schema.Column{SysUsersColumns[14]},
 				RefColumns: []*schema.Column{SysDepartmentsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -293,7 +320,7 @@ var (
 			{
 				Name:    "user_username_email",
 				Unique:  true,
-				Columns: []*schema.Column{SysUsersColumns[5], SysUsersColumns[11]},
+				Columns: []*schema.Column{SysUsersColumns[6], SysUsersColumns[12]},
 			},
 		},
 	}
@@ -382,6 +409,7 @@ var (
 		SysOauthProvidersTable,
 		SysPositionsTable,
 		SysRolesTable,
+		SysTenantsTable,
 		SysTokensTable,
 		SysUsersTable,
 		RoleMenusTable,
@@ -417,6 +445,9 @@ func init() {
 	}
 	SysRolesTable.Annotation = &entsql.Annotation{
 		Table: "sys_roles",
+	}
+	SysTenantsTable.Annotation = &entsql.Annotation{
+		Table: "sys_tenants",
 	}
 	SysTokensTable.Annotation = &entsql.Annotation{
 		Table: "sys_tokens",

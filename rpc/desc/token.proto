@@ -12,6 +12,7 @@ message TokenInfo {
   optional string source = 7;
   optional int64  expired_at = 8;
   optional string username = 9;
+  optional uint32 tenant_id = 10;
 }
 
 message TokenListResp {
@@ -26,6 +27,7 @@ message TokenListReq {
   optional string nickname = 4;
   optional string email = 5;
   optional string uuid = 6;
+  optional uint32 tenant_id = 7;
 }
 
 

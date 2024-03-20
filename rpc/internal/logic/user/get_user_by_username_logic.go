@@ -50,5 +50,7 @@ func (l *GetUserByUsernameLogic) GetUserByUsername(in *core.UsernameReq) (*core.
 		DepartmentId: &result.DepartmentID,
 		CreatedAt:    pointy.GetPointer(result.CreatedAt.UnixMilli()),
 		UpdatedAt:    pointy.GetPointer(result.UpdatedAt.UnixMilli()),
+		// int to proto int32 conversion
+		TenantId: pointy.GetPointer(uint32(result.TenantID)),
 	}, nil
 }

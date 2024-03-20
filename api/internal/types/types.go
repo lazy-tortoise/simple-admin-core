@@ -130,6 +130,8 @@ type RoleInfo struct {
 	// Sort | 排序
 	// max : 10000
 	Sort *uint32 `json:"sort,optional" validate:"omitempty,lt=10000"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional" validate:"omitempty"`
 }
 
 // The response data of role list | 角色列表数据
@@ -154,6 +156,8 @@ type RoleListReq struct {
 	PageInfo
 	// Name | 角色名称
 	Name *string `json:"name,optional"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // Role information response | 角色信息返回体
@@ -201,6 +205,8 @@ type UserInfo struct {
 	DepartmentId *uint64 `json:"departmentId,optional"`
 	// Position ID | 职位ID
 	PositionIds []uint64 `json:"positionId,optional"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // The response data of user list | 用户列表数据
@@ -241,6 +247,8 @@ type UserListReq struct {
 	DepartmentId *uint64 `json:"departmentId,optional"`
 	// User's position id | 用户的职位ID
 	PositionId *uint64 `json:"positionId,optional"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // User information response | 用户信息返回体
@@ -277,6 +285,8 @@ type RegisterReq struct {
 	// required : true
 	// max length : 100
 	Email string `json:"email" validate:"required,email,max=100"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // Register by email request | 邮箱注册参数
@@ -300,6 +310,8 @@ type RegisterByEmailReq struct {
 	// required : true
 	// max length : 100
 	Email string `json:"email" validate:"required,email,max=100"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // Register by SMS request | 短信注册参数
@@ -323,6 +335,8 @@ type RegisterBySmsReq struct {
 	// required : true
 	// max length : 20
 	PhoneNumber string `json:"phoneNumber"  validate:"required,numeric,max=20"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // change user's password request | 修改密码请求参数
@@ -1077,6 +1091,8 @@ type DepartmentInfo struct {
 	Remark *string `json:"remark,optional" validate:"omitempty,max=200"`
 	// ParentId | 父级 ID
 	ParentId *uint64 `json:"parentId,optional"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // The response data of department list | 部门列表数据
@@ -1105,6 +1121,8 @@ type DepartmentListReq struct {
 	// Leader | 部门负责人
 	// max length : 20
 	Leader *string `json:"leader,optional" validate:"omitempty,max=20"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // Department information response | 部门信息返回体
@@ -1167,6 +1185,8 @@ type PositionListReq struct {
 	// Remark | 备注
 	// max length : 200
 	Remark *string `json:"remark,optional" validate:"omitempty,max=200"`
+	// TenantId | 租户
+	TenantId *uint32 `json:"tenantId,optional"`
 }
 
 // Position information response | 职位信息返回体
@@ -1586,4 +1606,48 @@ type SendEmailReq struct {
 	Content string `json:"content"`
 	// The email provider | 邮件服务提供商
 	Provider *string `json:"provider,optional"`
+}
+
+// The response data of tenant information | Tenant信息
+// swagger:model TenantInfo
+type TenantInfo struct {
+	BaseIDInfo
+	// Status 1: normal 2: ban | 状态 1 正常 2 禁用
+	Status *uint32 `json:"status,optional"`
+	// Tenant ID | 租户ID
+	TenantId *int64 `json:"tenantId,optional"`
+	// Tenant name | 租户名称
+	Name *string `json:"name,optional"`
+}
+
+// The response data of tenant list | Tenant列表数据
+// swagger:model TenantListResp
+type TenantListResp struct {
+	BaseDataInfo
+	// Tenant list data | Tenant列表数据
+	Data TenantListInfo `json:"data"`
+}
+
+// Tenant list data | Tenant列表数据
+// swagger:model TenantListInfo
+type TenantListInfo struct {
+	BaseListInfo
+	// The API list data | Tenant列表数据
+	Data []TenantInfo `json:"data"`
+}
+
+// Get tenant list request params | Tenant列表请求参数
+// swagger:model TenantListReq
+type TenantListReq struct {
+	PageInfo
+	// Name
+	Name *string `json:"name,optional"`
+}
+
+// Tenant information response | Tenant信息返回体
+// swagger:model TenantInfoResp
+type TenantInfoResp struct {
+	BaseDataInfo
+	// Tenant information | Tenant数据
+	Data TenantInfo `json:"data"`
 }

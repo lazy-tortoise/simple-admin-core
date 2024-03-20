@@ -23,6 +23,8 @@ type Role struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// Status 1: normal 2: ban | 状态 1 正常 2 禁用
 	Status uint8 `json:"status,omitempty"`
+	// Tenant ID | 租户ID
+	TenantID int `json:"tenant_id,omitempty"`
 	// Role name | 角色名
 	Name string `json:"name,omitempty"`
 	// Role code for permission control in front end | 角色码，用于前端权限控制
@@ -73,7 +75,7 @@ func (*Role) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case role.FieldID, role.FieldStatus, role.FieldSort:
+		case role.FieldID, role.FieldStatus, role.FieldTenantID, role.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case role.FieldName, role.FieldCode, role.FieldDefaultRouter, role.FieldRemark:
 			values[i] = new(sql.NullString)
@@ -117,6 +119,12 @@ func (r *Role) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				r.Status = uint8(value.Int64)
+			}
+		case role.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+			} else if value.Valid {
+				r.TenantID = int(value.Int64)
 			}
 		case role.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -202,6 +210,9 @@ func (r *Role) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("status=")
 	builder.WriteString(fmt.Sprintf("%v", r.Status))
+	builder.WriteString(", ")
+	builder.WriteString("tenant_id=")
+	builder.WriteString(fmt.Sprintf("%v", r.TenantID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(r.Name)

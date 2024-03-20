@@ -84,6 +84,27 @@ func (pu *PositionUpdate) AddSort(u int32) *PositionUpdate {
 	return pu
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (pu *PositionUpdate) SetTenantID(i int) *PositionUpdate {
+	pu.mutation.ResetTenantID()
+	pu.mutation.SetTenantID(i)
+	return pu
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (pu *PositionUpdate) SetNillableTenantID(i *int) *PositionUpdate {
+	if i != nil {
+		pu.SetTenantID(*i)
+	}
+	return pu
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (pu *PositionUpdate) AddTenantID(i int) *PositionUpdate {
+	pu.mutation.AddTenantID(i)
+	return pu
+}
+
 // SetName sets the "name" field.
 func (pu *PositionUpdate) SetName(s string) *PositionUpdate {
 	pu.mutation.SetName(s)
@@ -236,6 +257,12 @@ func (pu *PositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := pu.mutation.AddedSort(); ok {
 		_spec.AddField(position.FieldSort, field.TypeUint32, value)
 	}
+	if value, ok := pu.mutation.TenantID(); ok {
+		_spec.SetField(position.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := pu.mutation.AddedTenantID(); ok {
+		_spec.AddField(position.FieldTenantID, field.TypeInt, value)
+	}
 	if value, ok := pu.mutation.Name(); ok {
 		_spec.SetField(position.FieldName, field.TypeString, value)
 	}
@@ -364,6 +391,27 @@ func (puo *PositionUpdateOne) SetNillableSort(u *uint32) *PositionUpdateOne {
 // AddSort adds u to the "sort" field.
 func (puo *PositionUpdateOne) AddSort(u int32) *PositionUpdateOne {
 	puo.mutation.AddSort(u)
+	return puo
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (puo *PositionUpdateOne) SetTenantID(i int) *PositionUpdateOne {
+	puo.mutation.ResetTenantID()
+	puo.mutation.SetTenantID(i)
+	return puo
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (puo *PositionUpdateOne) SetNillableTenantID(i *int) *PositionUpdateOne {
+	if i != nil {
+		puo.SetTenantID(*i)
+	}
+	return puo
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (puo *PositionUpdateOne) AddTenantID(i int) *PositionUpdateOne {
+	puo.mutation.AddTenantID(i)
 	return puo
 }
 
@@ -548,6 +596,12 @@ func (puo *PositionUpdateOne) sqlSave(ctx context.Context) (_node *Position, err
 	}
 	if value, ok := puo.mutation.AddedSort(); ok {
 		_spec.AddField(position.FieldSort, field.TypeUint32, value)
+	}
+	if value, ok := puo.mutation.TenantID(); ok {
+		_spec.SetField(position.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := puo.mutation.AddedTenantID(); ok {
+		_spec.AddField(position.FieldTenantID, field.TypeInt, value)
 	}
 	if value, ok := puo.mutation.Name(); ok {
 		_spec.SetField(position.FieldName, field.TypeString, value)

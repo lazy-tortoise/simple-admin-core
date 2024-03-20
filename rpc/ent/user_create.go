@@ -80,6 +80,20 @@ func (uc *UserCreate) SetNillableDeletedAt(t *time.Time) *UserCreate {
 	return uc
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (uc *UserCreate) SetTenantID(i int) *UserCreate {
+	uc.mutation.SetTenantID(i)
+	return uc
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (uc *UserCreate) SetNillableTenantID(i *int) *UserCreate {
+	if i != nil {
+		uc.SetTenantID(*i)
+	}
+	return uc
+}
+
 // SetUsername sets the "username" field.
 func (uc *UserCreate) SetUsername(s string) *UserCreate {
 	uc.mutation.SetUsername(s)
@@ -300,6 +314,10 @@ func (uc *UserCreate) defaults() error {
 		v := user.DefaultStatus
 		uc.mutation.SetStatus(v)
 	}
+	if _, ok := uc.mutation.TenantID(); !ok {
+		v := user.DefaultTenantID
+		uc.mutation.SetTenantID(v)
+	}
 	if _, ok := uc.mutation.HomePath(); !ok {
 		v := user.DefaultHomePath
 		uc.mutation.SetHomePath(v)
@@ -329,6 +347,9 @@ func (uc *UserCreate) check() error {
 	}
 	if _, ok := uc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "User.updated_at"`)}
+	}
+	if _, ok := uc.mutation.TenantID(); !ok {
+		return &ValidationError{Name: "tenant_id", err: errors.New(`ent: missing required field "User.tenant_id"`)}
 	}
 	if _, ok := uc.mutation.Username(); !ok {
 		return &ValidationError{Name: "username", err: errors.New(`ent: missing required field "User.username"`)}
@@ -392,6 +413,10 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := uc.mutation.DeletedAt(); ok {
 		_spec.SetField(user.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
+	}
+	if value, ok := uc.mutation.TenantID(); ok {
+		_spec.SetField(user.FieldTenantID, field.TypeInt, value)
+		_node.TenantID = value
 	}
 	if value, ok := uc.mutation.Username(); ok {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)

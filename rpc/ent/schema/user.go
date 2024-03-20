@@ -58,6 +58,7 @@ func (User) Mixin() []ent.Mixin {
 		mixins.UUIDMixin{},
 		mixins.StatusMixin{},
 		mixins2.SoftDeleteMixin{},
+		mixins2.TenantMixin{},
 	}
 }
 

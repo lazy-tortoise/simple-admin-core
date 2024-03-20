@@ -78,6 +78,20 @@ func (pc *PositionCreate) SetNillableSort(u *uint32) *PositionCreate {
 	return pc
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (pc *PositionCreate) SetTenantID(i int) *PositionCreate {
+	pc.mutation.SetTenantID(i)
+	return pc
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (pc *PositionCreate) SetNillableTenantID(i *int) *PositionCreate {
+	if i != nil {
+		pc.SetTenantID(*i)
+	}
+	return pc
+}
+
 // SetName sets the "name" field.
 func (pc *PositionCreate) SetName(s string) *PositionCreate {
 	pc.mutation.SetName(s)
@@ -176,6 +190,10 @@ func (pc *PositionCreate) defaults() {
 		v := position.DefaultSort
 		pc.mutation.SetSort(v)
 	}
+	if _, ok := pc.mutation.TenantID(); !ok {
+		v := position.DefaultTenantID
+		pc.mutation.SetTenantID(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -188,6 +206,9 @@ func (pc *PositionCreate) check() error {
 	}
 	if _, ok := pc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "Position.sort"`)}
+	}
+	if _, ok := pc.mutation.TenantID(); !ok {
+		return &ValidationError{Name: "tenant_id", err: errors.New(`ent: missing required field "Position.tenant_id"`)}
 	}
 	if _, ok := pc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Position.name"`)}
@@ -242,6 +263,10 @@ func (pc *PositionCreate) createSpec() (*Position, *sqlgraph.CreateSpec) {
 	if value, ok := pc.mutation.Sort(); ok {
 		_spec.SetField(position.FieldSort, field.TypeUint32, value)
 		_node.Sort = value
+	}
+	if value, ok := pc.mutation.TenantID(); ok {
+		_spec.SetField(position.FieldTenantID, field.TypeInt, value)
+		_node.TenantID = value
 	}
 	if value, ok := pc.mutation.Name(); ok {
 		_spec.SetField(position.FieldName, field.TypeString, value)

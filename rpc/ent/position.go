@@ -25,6 +25,8 @@ type Position struct {
 	Status uint8 `json:"status,omitempty"`
 	// Sort Number | 排序编号
 	Sort uint32 `json:"sort,omitempty"`
+	// Tenant ID | 租户ID
+	TenantID int `json:"tenant_id,omitempty"`
 	// Position Name | 职位名称
 	Name string `json:"name,omitempty"`
 	// The code of position | 职位编码
@@ -60,7 +62,7 @@ func (*Position) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case position.FieldID, position.FieldStatus, position.FieldSort:
+		case position.FieldID, position.FieldStatus, position.FieldSort, position.FieldTenantID:
 			values[i] = new(sql.NullInt64)
 		case position.FieldName, position.FieldCode, position.FieldRemark:
 			values[i] = new(sql.NullString)
@@ -110,6 +112,12 @@ func (po *Position) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
 				po.Sort = uint32(value.Int64)
+			}
+		case position.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+			} else if value.Valid {
+				po.TenantID = int(value.Int64)
 			}
 		case position.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -181,6 +189,9 @@ func (po *Position) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", po.Sort))
+	builder.WriteString(", ")
+	builder.WriteString("tenant_id=")
+	builder.WriteString(fmt.Sprintf("%v", po.TenantID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(po.Name)

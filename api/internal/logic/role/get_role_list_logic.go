@@ -55,6 +55,7 @@ func (l *GetRoleListLogic) GetRoleList(req *types.RoleListReq) (resp *types.Role
 				DefaultRouter: v.DefaultRouter,
 				Remark:        v.Remark,
 				Sort:          v.Sort,
+				TenantId:      v.TenantId,
 			})
 	}
 	return resp, nil

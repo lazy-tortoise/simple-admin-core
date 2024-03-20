@@ -25,6 +25,8 @@ type Department struct {
 	Status uint8 `json:"status,omitempty"`
 	// Sort Number | 排序编号
 	Sort uint32 `json:"sort,omitempty"`
+	// Tenant ID | 租户ID
+	TenantID int `json:"tenant_id,omitempty"`
 	// Department name | 部门名称
 	Name string `json:"name,omitempty"`
 	// Parents' IDs | 父级列表
@@ -92,7 +94,7 @@ func (*Department) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case department.FieldID, department.FieldStatus, department.FieldSort, department.FieldParentID:
+		case department.FieldID, department.FieldStatus, department.FieldSort, department.FieldTenantID, department.FieldParentID:
 			values[i] = new(sql.NullInt64)
 		case department.FieldName, department.FieldAncestors, department.FieldLeader, department.FieldPhone, department.FieldEmail, department.FieldRemark:
 			values[i] = new(sql.NullString)
@@ -142,6 +144,12 @@ func (d *Department) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
 				d.Sort = uint32(value.Int64)
+			}
+		case department.FieldTenantID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tenant_id", values[i])
+			} else if value.Valid {
+				d.TenantID = int(value.Int64)
 			}
 		case department.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -247,6 +255,9 @@ func (d *Department) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", d.Sort))
+	builder.WriteString(", ")
+	builder.WriteString("tenant_id=")
+	builder.WriteString(fmt.Sprintf("%v", d.TenantID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(d.Name)

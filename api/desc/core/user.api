@@ -40,6 +40,9 @@ type (
 
         // Position ID | 职位ID
         PositionIds []uint64 `json:"positionId,optional"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // The response data of user list | 用户列表数据
@@ -82,6 +85,9 @@ type (
 
         // User's position id | 用户的职位ID
         PositionId *uint64 `json:"positionId,optional"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // User information response | 用户信息返回体
@@ -108,6 +114,9 @@ type (
 
         // The user's email address | 用户的邮箱
         Email     string `json:"email" validate:"required,email,max=100"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // Register by email request | 邮箱注册参数
@@ -123,6 +132,9 @@ type (
 
         // The user's email address | 用户的邮箱
         Email     string `json:"email" validate:"required,email,max=100"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // Register by SMS request | 短信注册参数
@@ -138,6 +150,9 @@ type (
 
         // The user's mobile phone number | 用户的手机号码
         PhoneNumber   string  `json:"phoneNumber"  validate:"required,numeric,max=20"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // change user's password request | 修改密码请求参数

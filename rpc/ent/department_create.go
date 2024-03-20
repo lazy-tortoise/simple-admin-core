@@ -78,6 +78,20 @@ func (dc *DepartmentCreate) SetNillableSort(u *uint32) *DepartmentCreate {
 	return dc
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (dc *DepartmentCreate) SetTenantID(i int) *DepartmentCreate {
+	dc.mutation.SetTenantID(i)
+	return dc
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (dc *DepartmentCreate) SetNillableTenantID(i *int) *DepartmentCreate {
+	if i != nil {
+		dc.SetTenantID(*i)
+	}
+	return dc
+}
+
 // SetName sets the "name" field.
 func (dc *DepartmentCreate) SetName(s string) *DepartmentCreate {
 	dc.mutation.SetName(s)
@@ -236,6 +250,10 @@ func (dc *DepartmentCreate) defaults() {
 		v := department.DefaultSort
 		dc.mutation.SetSort(v)
 	}
+	if _, ok := dc.mutation.TenantID(); !ok {
+		v := department.DefaultTenantID
+		dc.mutation.SetTenantID(v)
+	}
 	if _, ok := dc.mutation.ParentID(); !ok {
 		v := department.DefaultParentID
 		dc.mutation.SetParentID(v)
@@ -252,6 +270,9 @@ func (dc *DepartmentCreate) check() error {
 	}
 	if _, ok := dc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "Department.sort"`)}
+	}
+	if _, ok := dc.mutation.TenantID(); !ok {
+		return &ValidationError{Name: "tenant_id", err: errors.New(`ent: missing required field "Department.tenant_id"`)}
 	}
 	if _, ok := dc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Department.name"`)}
@@ -312,6 +333,10 @@ func (dc *DepartmentCreate) createSpec() (*Department, *sqlgraph.CreateSpec) {
 	if value, ok := dc.mutation.Sort(); ok {
 		_spec.SetField(department.FieldSort, field.TypeUint32, value)
 		_node.Sort = value
+	}
+	if value, ok := dc.mutation.TenantID(); ok {
+		_spec.SetField(department.FieldTenantID, field.TypeInt, value)
+		_node.TenantID = value
 	}
 	if value, ok := dc.mutation.Name(); ok {
 		_spec.SetField(department.FieldName, field.TypeString, value)

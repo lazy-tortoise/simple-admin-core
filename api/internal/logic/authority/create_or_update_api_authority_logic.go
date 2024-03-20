@@ -3,6 +3,7 @@ package authority
 import (
 	"context"
 	"github.com/zeromicro/go-zero/core/errorx"
+	"strconv"
 
 	"github.com/suyuan32/simple-admin-common/i18n"
 
@@ -46,10 +47,11 @@ func (l *CreateOrUpdateApiAuthorityLogic) CreateOrUpdateApiAuthority(req *types.
 			return nil, errorx.NewInvalidArgumentError("casbin.removeFailed")
 		}
 	}
+	tenantIdsStr := strconv.FormatUint(uint64(*data.TenantId), 10)
 	// add new policies
 	var policies [][]string
 	for _, v := range req.Data {
-		policies = append(policies, []string{*data.Code, v.Path, v.Method})
+		policies = append(policies, []string{*data.Code, tenantIdsStr, v.Path, v.Method})
 	}
 	addResult, err := l.svcCtx.Casbin.AddPolicies(policies)
 	if err != nil {

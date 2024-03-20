@@ -7,6 +7,7 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	mixins2 "github.com/suyuan32/simple-admin-core/rpc/ent/schema/mixins"
 
 	"github.com/suyuan32/simple-admin-common/orm/ent/mixins"
 )
@@ -39,6 +40,7 @@ func (Role) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.IDMixin{},
 		mixins.StatusMixin{},
+		mixins2.TenantMixin{},
 	}
 }
 

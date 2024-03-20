@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/casbin/casbin/v2/constant"
 	"github.com/mojocn/base64Captcha"
 	"github.com/redis/go-redis/v9"
 	"github.com/suyuan32/simple-admin-common/i18n"
@@ -37,6 +38,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 	cbn := c.CasbinConf.MustNewCasbinWithOriginalRedisWatcher(c.DatabaseConf.Type, c.DatabaseConf.GetDSN(),
 		c.RedisConf)
+
+	cbn.SetFieldIndex("p", constant.SubjectIndex, 0)
+	cbn.SetFieldIndex("p", constant.DomainIndex, 1)
+	cbn.SetFieldIndex("p", constant.ObjectIndex, 2)
+	cbn.SetFieldIndex("p", constant.PriorityIndex, 3)
 
 	var trans *i18n.Translator
 	if c.I18nConf.Dir != "" {

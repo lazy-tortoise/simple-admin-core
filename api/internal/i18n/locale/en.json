@@ -199,7 +199,12 @@
 		"updateTaskLog": "Update the task log",
 		"deleteTaskLog": "Delete task logs",
 		"getTaskLogList": "Get task log list",
-		"getTaskLogById": "Get task log by ID"
+		"getTaskLogById": "Get task log by ID",
+		"createTenant": "Create a tenant",
+		"updateTenant": "Update the tenant",
+		"deleteTenant": "Delete tenants",
+		"getTenantList": "Get tenant list",
+		"getTenantById": "Get tenant by ID"
 	},
 	"route": {
 		"dashboard": "Dashboard",

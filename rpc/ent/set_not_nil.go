@@ -249,6 +249,30 @@ func (d *DepartmentCreate) SetNotNilSort(value *uint32) *DepartmentCreate {
 }
 
 // set field if value's pointer is not nil.
+func (d *DepartmentUpdate) SetNotNilTenantID(value *int) *DepartmentUpdate {
+	if value != nil {
+		return d.SetTenantID(*value)
+	}
+	return d
+}
+
+// set field if value's pointer is not nil.
+func (d *DepartmentUpdateOne) SetNotNilTenantID(value *int) *DepartmentUpdateOne {
+	if value != nil {
+		return d.SetTenantID(*value)
+	}
+	return d
+}
+
+// set field if value's pointer is not nil.
+func (d *DepartmentCreate) SetNotNilTenantID(value *int) *DepartmentCreate {
+	if value != nil {
+		return d.SetTenantID(*value)
+	}
+	return d
+}
+
+// set field if value's pointer is not nil.
 func (d *DepartmentUpdate) SetNotNilName(value *string) *DepartmentUpdate {
 	if value != nil {
 		return d.SetName(*value)
@@ -1569,6 +1593,30 @@ func (po *PositionCreate) SetNotNilSort(value *uint32) *PositionCreate {
 }
 
 // set field if value's pointer is not nil.
+func (po *PositionUpdate) SetNotNilTenantID(value *int) *PositionUpdate {
+	if value != nil {
+		return po.SetTenantID(*value)
+	}
+	return po
+}
+
+// set field if value's pointer is not nil.
+func (po *PositionUpdateOne) SetNotNilTenantID(value *int) *PositionUpdateOne {
+	if value != nil {
+		return po.SetTenantID(*value)
+	}
+	return po
+}
+
+// set field if value's pointer is not nil.
+func (po *PositionCreate) SetNotNilTenantID(value *int) *PositionCreate {
+	if value != nil {
+		return po.SetTenantID(*value)
+	}
+	return po
+}
+
+// set field if value's pointer is not nil.
 func (po *PositionUpdate) SetNotNilName(value *string) *PositionUpdate {
 	if value != nil {
 		return po.SetName(*value)
@@ -1684,6 +1732,30 @@ func (r *RoleUpdateOne) SetNotNilStatus(value *uint8) *RoleUpdateOne {
 func (r *RoleCreate) SetNotNilStatus(value *uint8) *RoleCreate {
 	if value != nil {
 		return r.SetStatus(*value)
+	}
+	return r
+}
+
+// set field if value's pointer is not nil.
+func (r *RoleUpdate) SetNotNilTenantID(value *int) *RoleUpdate {
+	if value != nil {
+		return r.SetTenantID(*value)
+	}
+	return r
+}
+
+// set field if value's pointer is not nil.
+func (r *RoleUpdateOne) SetNotNilTenantID(value *int) *RoleUpdateOne {
+	if value != nil {
+		return r.SetTenantID(*value)
+	}
+	return r
+}
+
+// set field if value's pointer is not nil.
+func (r *RoleCreate) SetNotNilTenantID(value *int) *RoleCreate {
+	if value != nil {
+		return r.SetTenantID(*value)
 	}
 	return r
 }
@@ -1809,6 +1881,102 @@ func (r *RoleCreate) SetNotNilSort(value *uint32) *RoleCreate {
 }
 
 // set field if value's pointer is not nil.
+func (t *TenantUpdate) SetNotNilUpdatedAt(value *time.Time) *TenantUpdate {
+	if value != nil {
+		return t.SetUpdatedAt(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdateOne) SetNotNilUpdatedAt(value *time.Time) *TenantUpdateOne {
+	if value != nil {
+		return t.SetUpdatedAt(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantCreate) SetNotNilUpdatedAt(value *time.Time) *TenantCreate {
+	if value != nil {
+		return t.SetUpdatedAt(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdate) SetNotNilStatus(value *uint8) *TenantUpdate {
+	if value != nil {
+		return t.SetStatus(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdateOne) SetNotNilStatus(value *uint8) *TenantUpdateOne {
+	if value != nil {
+		return t.SetStatus(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantCreate) SetNotNilStatus(value *uint8) *TenantCreate {
+	if value != nil {
+		return t.SetStatus(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdate) SetNotNilTenantID(value *int) *TenantUpdate {
+	if value != nil {
+		return t.SetTenantID(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdateOne) SetNotNilTenantID(value *int) *TenantUpdateOne {
+	if value != nil {
+		return t.SetTenantID(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantCreate) SetNotNilTenantID(value *int) *TenantCreate {
+	if value != nil {
+		return t.SetTenantID(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdate) SetNotNilName(value *string) *TenantUpdate {
+	if value != nil {
+		return t.SetName(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantUpdateOne) SetNotNilName(value *string) *TenantUpdateOne {
+	if value != nil {
+		return t.SetName(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TenantCreate) SetNotNilName(value *string) *TenantCreate {
+	if value != nil {
+		return t.SetName(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
 func (t *TokenUpdate) SetNotNilUpdatedAt(value *time.Time) *TokenUpdate {
 	if value != nil {
 		return t.SetUpdatedAt(*value)
@@ -1852,6 +2020,30 @@ func (t *TokenUpdateOne) SetNotNilStatus(value *uint8) *TokenUpdateOne {
 func (t *TokenCreate) SetNotNilStatus(value *uint8) *TokenCreate {
 	if value != nil {
 		return t.SetStatus(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TokenUpdate) SetNotNilTenantID(value *int) *TokenUpdate {
+	if value != nil {
+		return t.SetTenantID(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TokenUpdateOne) SetNotNilTenantID(value *int) *TokenUpdateOne {
+	if value != nil {
+		return t.SetTenantID(*value)
+	}
+	return t
+}
+
+// set field if value's pointer is not nil.
+func (t *TokenCreate) SetNotNilTenantID(value *int) *TokenCreate {
+	if value != nil {
+		return t.SetTenantID(*value)
 	}
 	return t
 }
@@ -2044,6 +2236,30 @@ func (u *UserUpdateOne) SetNotNilDeletedAt(value *time.Time) *UserUpdateOne {
 func (u *UserCreate) SetNotNilDeletedAt(value *time.Time) *UserCreate {
 	if value != nil {
 		return u.SetDeletedAt(*value)
+	}
+	return u
+}
+
+// set field if value's pointer is not nil.
+func (u *UserUpdate) SetNotNilTenantID(value *int) *UserUpdate {
+	if value != nil {
+		return u.SetTenantID(*value)
+	}
+	return u
+}
+
+// set field if value's pointer is not nil.
+func (u *UserUpdateOne) SetNotNilTenantID(value *int) *UserUpdateOne {
+	if value != nil {
+		return u.SetTenantID(*value)
+	}
+	return u
+}
+
+// set field if value's pointer is not nil.
+func (u *UserCreate) SetNotNilTenantID(value *int) *UserCreate {
+	if value != nil {
+		return u.SetTenantID(*value)
 	}
 	return u
 }

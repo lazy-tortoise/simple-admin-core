@@ -42,5 +42,6 @@ func (l *GetRoleByIdLogic) GetRoleById(in *core.IDReq) (*core.RoleInfo, error) {
 		DefaultRouter: &result.DefaultRouter,
 		Remark:        &result.Remark,
 		Sort:          &result.Sort,
+		TenantId:      pointy.GetPointer(uint32(result.TenantID)),
 	}, nil
 }

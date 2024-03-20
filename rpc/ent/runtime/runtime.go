@@ -15,6 +15,7 @@ import (
 	"github.com/suyuan32/simple-admin-core/rpc/ent/position"
 	"github.com/suyuan32/simple-admin-core/rpc/ent/role"
 	"github.com/suyuan32/simple-admin-core/rpc/ent/schema"
+	"github.com/suyuan32/simple-admin-core/rpc/ent/tenant"
 	"github.com/suyuan32/simple-admin-core/rpc/ent/token"
 	"github.com/suyuan32/simple-admin-core/rpc/ent/user"
 )
@@ -57,6 +58,8 @@ func init() {
 	_ = departmentMixinFields1
 	departmentMixinFields2 := departmentMixin[2].Fields()
 	_ = departmentMixinFields2
+	departmentMixinFields3 := departmentMixin[3].Fields()
+	_ = departmentMixinFields3
 	departmentFields := schema.Department{}.Fields()
 	_ = departmentFields
 	// departmentDescCreatedAt is the schema descriptor for created_at field.
@@ -77,6 +80,10 @@ func init() {
 	departmentDescSort := departmentMixinFields2[0].Descriptor()
 	// department.DefaultSort holds the default value on creation for the sort field.
 	department.DefaultSort = departmentDescSort.Default.(uint32)
+	// departmentDescTenantID is the schema descriptor for tenant_id field.
+	departmentDescTenantID := departmentMixinFields3[0].Descriptor()
+	// department.DefaultTenantID holds the default value on creation for the tenant_id field.
+	department.DefaultTenantID = departmentDescTenantID.Default.(int)
 	// departmentDescParentID is the schema descriptor for parent_id field.
 	departmentDescParentID := departmentFields[6].Descriptor()
 	// department.DefaultParentID holds the default value on creation for the parent_id field.
@@ -236,6 +243,8 @@ func init() {
 	_ = positionMixinFields1
 	positionMixinFields2 := positionMixin[2].Fields()
 	_ = positionMixinFields2
+	positionMixinFields3 := positionMixin[3].Fields()
+	_ = positionMixinFields3
 	positionFields := schema.Position{}.Fields()
 	_ = positionFields
 	// positionDescCreatedAt is the schema descriptor for created_at field.
@@ -256,11 +265,17 @@ func init() {
 	positionDescSort := positionMixinFields2[0].Descriptor()
 	// position.DefaultSort holds the default value on creation for the sort field.
 	position.DefaultSort = positionDescSort.Default.(uint32)
+	// positionDescTenantID is the schema descriptor for tenant_id field.
+	positionDescTenantID := positionMixinFields3[0].Descriptor()
+	// position.DefaultTenantID holds the default value on creation for the tenant_id field.
+	position.DefaultTenantID = positionDescTenantID.Default.(int)
 	roleMixin := schema.Role{}.Mixin()
 	roleMixinFields0 := roleMixin[0].Fields()
 	_ = roleMixinFields0
 	roleMixinFields1 := roleMixin[1].Fields()
 	_ = roleMixinFields1
+	roleMixinFields2 := roleMixin[2].Fields()
+	_ = roleMixinFields2
 	roleFields := schema.Role{}.Fields()
 	_ = roleFields
 	// roleDescCreatedAt is the schema descriptor for created_at field.
@@ -277,6 +292,10 @@ func init() {
 	roleDescStatus := roleMixinFields1[0].Descriptor()
 	// role.DefaultStatus holds the default value on creation for the status field.
 	role.DefaultStatus = roleDescStatus.Default.(uint8)
+	// roleDescTenantID is the schema descriptor for tenant_id field.
+	roleDescTenantID := roleMixinFields2[0].Descriptor()
+	// role.DefaultTenantID holds the default value on creation for the tenant_id field.
+	role.DefaultTenantID = roleDescTenantID.Default.(int)
 	// roleDescDefaultRouter is the schema descriptor for default_router field.
 	roleDescDefaultRouter := roleFields[2].Descriptor()
 	// role.DefaultDefaultRouter holds the default value on creation for the default_router field.
@@ -289,11 +308,38 @@ func init() {
 	roleDescSort := roleFields[4].Descriptor()
 	// role.DefaultSort holds the default value on creation for the sort field.
 	role.DefaultSort = roleDescSort.Default.(uint32)
+	tenantMixin := schema.Tenant{}.Mixin()
+	tenantMixinFields0 := tenantMixin[0].Fields()
+	_ = tenantMixinFields0
+	tenantMixinFields1 := tenantMixin[1].Fields()
+	_ = tenantMixinFields1
+	tenantFields := schema.Tenant{}.Fields()
+	_ = tenantFields
+	// tenantDescCreatedAt is the schema descriptor for created_at field.
+	tenantDescCreatedAt := tenantMixinFields0[1].Descriptor()
+	// tenant.DefaultCreatedAt holds the default value on creation for the created_at field.
+	tenant.DefaultCreatedAt = tenantDescCreatedAt.Default.(func() time.Time)
+	// tenantDescUpdatedAt is the schema descriptor for updated_at field.
+	tenantDescUpdatedAt := tenantMixinFields0[2].Descriptor()
+	// tenant.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	tenant.DefaultUpdatedAt = tenantDescUpdatedAt.Default.(func() time.Time)
+	// tenant.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	tenant.UpdateDefaultUpdatedAt = tenantDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// tenantDescStatus is the schema descriptor for status field.
+	tenantDescStatus := tenantMixinFields1[0].Descriptor()
+	// tenant.DefaultStatus holds the default value on creation for the status field.
+	tenant.DefaultStatus = tenantDescStatus.Default.(uint8)
+	// tenantDescTenantID is the schema descriptor for tenant_id field.
+	tenantDescTenantID := tenantFields[0].Descriptor()
+	// tenant.DefaultTenantID holds the default value on creation for the tenant_id field.
+	tenant.DefaultTenantID = tenantDescTenantID.Default.(int)
 	tokenMixin := schema.Token{}.Mixin()
 	tokenMixinFields0 := tokenMixin[0].Fields()
 	_ = tokenMixinFields0
 	tokenMixinFields1 := tokenMixin[1].Fields()
 	_ = tokenMixinFields1
+	tokenMixinFields2 := tokenMixin[2].Fields()
+	_ = tokenMixinFields2
 	tokenFields := schema.Token{}.Fields()
 	_ = tokenFields
 	// tokenDescCreatedAt is the schema descriptor for created_at field.
@@ -310,6 +356,10 @@ func init() {
 	tokenDescStatus := tokenMixinFields1[0].Descriptor()
 	// token.DefaultStatus holds the default value on creation for the status field.
 	token.DefaultStatus = tokenDescStatus.Default.(uint8)
+	// tokenDescTenantID is the schema descriptor for tenant_id field.
+	tokenDescTenantID := tokenMixinFields2[0].Descriptor()
+	// token.DefaultTenantID holds the default value on creation for the tenant_id field.
+	token.DefaultTenantID = tokenDescTenantID.Default.(int)
 	// tokenDescUsername is the schema descriptor for username field.
 	tokenDescUsername := tokenFields[1].Descriptor()
 	// token.DefaultUsername holds the default value on creation for the username field.
@@ -327,6 +377,8 @@ func init() {
 	_ = userMixinFields0
 	userMixinFields1 := userMixin[1].Fields()
 	_ = userMixinFields1
+	userMixinFields3 := userMixin[3].Fields()
+	_ = userMixinFields3
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescCreatedAt is the schema descriptor for created_at field.
@@ -343,6 +395,10 @@ func init() {
 	userDescStatus := userMixinFields1[0].Descriptor()
 	// user.DefaultStatus holds the default value on creation for the status field.
 	user.DefaultStatus = userDescStatus.Default.(uint8)
+	// userDescTenantID is the schema descriptor for tenant_id field.
+	userDescTenantID := userMixinFields3[0].Descriptor()
+	// user.DefaultTenantID holds the default value on creation for the tenant_id field.
+	user.DefaultTenantID = userDescTenantID.Default.(int)
 	// userDescHomePath is the schema descriptor for home_path field.
 	userDescHomePath := userFields[4].Descriptor()
 	// user.DefaultHomePath holds the default value on creation for the home_path field.

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/redis/go-redis/v9"
 	"github.com/suyuan32/simple-admin-common/config"
@@ -43,6 +44,14 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		// get the role id
 		roleIds := strings.Split(r.Context().Value("roleId").(string), ",")
 
+		// get tenant id
+		tenantId, ok := r.Context().Value("tenantId").(json.Number)
+		if !ok {
+			logx.Errorw("tenantId is not found in the context", logx.Field("detail", r.Context().Value("userId").(string)))
+			httpx.Error(w, errorx.NewApiError(http.StatusOK, "tenantId is not found in the context"))
+			return
+		}
+
 		// check the role status
 		var isRoleNormal bool
 		for _, v := range roleIds {
@@ -68,7 +77,7 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		result := batchCheck(m.Cbn, roleIds, act, obj)
+		result := batchCheck(m.Cbn, roleIds, act, obj, tenantId.String())
 
 		if result {
 			logx.Infow("HTTP/HTTPS Request", logx.Field("UUID", r.Context().Value("userId").(string)),
@@ -86,13 +95,13 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-func batchCheck(cbn *casbin.Enforcer, roleIds []string, act, obj string) bool {
+func batchCheck(cbn *casbin.Enforcer, roleIds []string, act, obj, domain string) bool {
 	var checkReq [][]any
 	for _, v := range roleIds {
-		checkReq = append(checkReq, []any{v, obj, act})
+		checkReq = append(checkReq, []any{v, domain, obj, act})
 	}
 
-	result, err := cbn.BatchEnforce(checkReq)
+	result, err := cbn.BatchEnforce(checkReq) //https://casbin.org/zh/docs/rbac-with-domains
 	if err != nil {
 		logx.Errorw("Casbin enforce error", logx.Field("detail", err.Error()))
 		return false

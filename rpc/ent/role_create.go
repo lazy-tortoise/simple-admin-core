@@ -65,6 +65,20 @@ func (rc *RoleCreate) SetNillableStatus(u *uint8) *RoleCreate {
 	return rc
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (rc *RoleCreate) SetTenantID(i int) *RoleCreate {
+	rc.mutation.SetTenantID(i)
+	return rc
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (rc *RoleCreate) SetNillableTenantID(i *int) *RoleCreate {
+	if i != nil {
+		rc.SetTenantID(*i)
+	}
+	return rc
+}
+
 // SetName sets the "name" field.
 func (rc *RoleCreate) SetName(s string) *RoleCreate {
 	rc.mutation.SetName(s)
@@ -202,6 +216,10 @@ func (rc *RoleCreate) defaults() {
 		v := role.DefaultStatus
 		rc.mutation.SetStatus(v)
 	}
+	if _, ok := rc.mutation.TenantID(); !ok {
+		v := role.DefaultTenantID
+		rc.mutation.SetTenantID(v)
+	}
 	if _, ok := rc.mutation.DefaultRouter(); !ok {
 		v := role.DefaultDefaultRouter
 		rc.mutation.SetDefaultRouter(v)
@@ -223,6 +241,9 @@ func (rc *RoleCreate) check() error {
 	}
 	if _, ok := rc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Role.updated_at"`)}
+	}
+	if _, ok := rc.mutation.TenantID(); !ok {
+		return &ValidationError{Name: "tenant_id", err: errors.New(`ent: missing required field "Role.tenant_id"`)}
 	}
 	if _, ok := rc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Role.name"`)}
@@ -282,6 +303,10 @@ func (rc *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 	if value, ok := rc.mutation.Status(); ok {
 		_spec.SetField(role.FieldStatus, field.TypeUint8, value)
 		_node.Status = value
+	}
+	if value, ok := rc.mutation.TenantID(); ok {
+		_spec.SetField(role.FieldTenantID, field.TypeInt, value)
+		_node.TenantID = value
 	}
 	if value, ok := rc.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)

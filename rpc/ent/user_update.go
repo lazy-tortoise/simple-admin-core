@@ -84,6 +84,27 @@ func (uu *UserUpdate) ClearDeletedAt() *UserUpdate {
 	return uu
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (uu *UserUpdate) SetTenantID(i int) *UserUpdate {
+	uu.mutation.ResetTenantID()
+	uu.mutation.SetTenantID(i)
+	return uu
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (uu *UserUpdate) SetNillableTenantID(i *int) *UserUpdate {
+	if i != nil {
+		uu.SetTenantID(*i)
+	}
+	return uu
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (uu *UserUpdate) AddTenantID(i int) *UserUpdate {
+	uu.mutation.AddTenantID(i)
+	return uu
+}
+
 // SetUsername sets the "username" field.
 func (uu *UserUpdate) SetUsername(s string) *UserUpdate {
 	uu.mutation.SetUsername(s)
@@ -411,6 +432,12 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if uu.mutation.DeletedAtCleared() {
 		_spec.ClearField(user.FieldDeletedAt, field.TypeTime)
 	}
+	if value, ok := uu.mutation.TenantID(); ok {
+		_spec.SetField(user.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := uu.mutation.AddedTenantID(); ok {
+		_spec.AddField(user.FieldTenantID, field.TypeInt, value)
+	}
 	if value, ok := uu.mutation.Username(); ok {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)
 	}
@@ -636,6 +663,27 @@ func (uuo *UserUpdateOne) SetNillableDeletedAt(t *time.Time) *UserUpdateOne {
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (uuo *UserUpdateOne) ClearDeletedAt() *UserUpdateOne {
 	uuo.mutation.ClearDeletedAt()
+	return uuo
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (uuo *UserUpdateOne) SetTenantID(i int) *UserUpdateOne {
+	uuo.mutation.ResetTenantID()
+	uuo.mutation.SetTenantID(i)
+	return uuo
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (uuo *UserUpdateOne) SetNillableTenantID(i *int) *UserUpdateOne {
+	if i != nil {
+		uuo.SetTenantID(*i)
+	}
+	return uuo
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (uuo *UserUpdateOne) AddTenantID(i int) *UserUpdateOne {
+	uuo.mutation.AddTenantID(i)
 	return uuo
 }
 
@@ -995,6 +1043,12 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 	}
 	if uuo.mutation.DeletedAtCleared() {
 		_spec.ClearField(user.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := uuo.mutation.TenantID(); ok {
+		_spec.SetField(user.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := uuo.mutation.AddedTenantID(); ok {
+		_spec.AddField(user.FieldTenantID, field.TypeInt, value)
 	}
 	if value, ok := uuo.mutation.Username(); ok {
 		_spec.SetField(user.FieldUsername, field.TypeString, value)

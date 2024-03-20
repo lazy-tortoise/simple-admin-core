@@ -64,6 +64,27 @@ func (ru *RoleUpdate) ClearStatus() *RoleUpdate {
 	return ru
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (ru *RoleUpdate) SetTenantID(i int) *RoleUpdate {
+	ru.mutation.ResetTenantID()
+	ru.mutation.SetTenantID(i)
+	return ru
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (ru *RoleUpdate) SetNillableTenantID(i *int) *RoleUpdate {
+	if i != nil {
+		ru.SetTenantID(*i)
+	}
+	return ru
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (ru *RoleUpdate) AddTenantID(i int) *RoleUpdate {
+	ru.mutation.AddTenantID(i)
+	return ru
+}
+
 // SetName sets the "name" field.
 func (ru *RoleUpdate) SetName(s string) *RoleUpdate {
 	ru.mutation.SetName(s)
@@ -275,6 +296,12 @@ func (ru *RoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if ru.mutation.StatusCleared() {
 		_spec.ClearField(role.FieldStatus, field.TypeUint8)
 	}
+	if value, ok := ru.mutation.TenantID(); ok {
+		_spec.SetField(role.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := ru.mutation.AddedTenantID(); ok {
+		_spec.AddField(role.FieldTenantID, field.TypeInt, value)
+	}
 	if value, ok := ru.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
@@ -433,6 +460,27 @@ func (ruo *RoleUpdateOne) AddStatus(u int8) *RoleUpdateOne {
 // ClearStatus clears the value of the "status" field.
 func (ruo *RoleUpdateOne) ClearStatus() *RoleUpdateOne {
 	ruo.mutation.ClearStatus()
+	return ruo
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (ruo *RoleUpdateOne) SetTenantID(i int) *RoleUpdateOne {
+	ruo.mutation.ResetTenantID()
+	ruo.mutation.SetTenantID(i)
+	return ruo
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (ruo *RoleUpdateOne) SetNillableTenantID(i *int) *RoleUpdateOne {
+	if i != nil {
+		ruo.SetTenantID(*i)
+	}
+	return ruo
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (ruo *RoleUpdateOne) AddTenantID(i int) *RoleUpdateOne {
+	ruo.mutation.AddTenantID(i)
 	return ruo
 }
 
@@ -676,6 +724,12 @@ func (ruo *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) 
 	}
 	if ruo.mutation.StatusCleared() {
 		_spec.ClearField(role.FieldStatus, field.TypeUint8)
+	}
+	if value, ok := ruo.mutation.TenantID(); ok {
+		_spec.SetField(role.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := ruo.mutation.AddedTenantID(); ok {
+		_spec.AddField(role.FieldTenantID, field.TypeInt, value)
 	}
 	if value, ok := ruo.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)

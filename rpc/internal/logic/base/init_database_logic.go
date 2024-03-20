@@ -5,6 +5,8 @@ import (
 	"errors"
 	"github.com/bsm/redislock"
 	"github.com/suyuan32/simple-admin-core/rpc/ent/role"
+	"github.com/suyuan32/simple-admin-core/rpc/ent/tenant"
+	"strconv"
 	"time"
 
 	"entgo.io/ent/dialect/sql/schema"
@@ -242,9 +244,16 @@ func (l *InitDatabaseLogic) insertCasbinPoliciesData() error {
 		roleCode = "001"
 	}
 
+	// get tenant
+	var tenantCode string
+	if tenant, err := l.svcCtx.DB.Tenant.Query().Where(tenant.TenantIDEQ(0)).First(l.ctx); err == nil {
+		tenantCode = strconv.Itoa(tenant.TenantID)
+	} else {
+		tenantCode = "0"
+	}
 	var policies [][]string
 	for _, v := range apis {
-		policies = append(policies, []string{roleCode, v.Path, v.Method})
+		policies = append(policies, []string{roleCode, tenantCode, v.Path, v.Method})
 	}
 
 	csb, err := l.svcCtx.Config.CasbinConf.NewCasbin(l.svcCtx.Config.DatabaseConf.Type,

@@ -11,6 +11,7 @@ message PositionInfo {
   optional string name = 6;
   optional string code = 7;
   optional string remark = 8;
+  optional uint32 tenant_id = 9;
 }
 
 message PositionListResp {
@@ -24,6 +25,7 @@ message PositionListReq {
   optional string name = 3;
   optional string code = 4;
   optional string remark = 5;
+  optional uint32 tenant_id = 6;
 }
 
 

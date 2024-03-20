@@ -52,6 +52,9 @@ type (
 
         // Remark | 备注
         Remark *string `json:"remark,optional" validate:"omitempty,max=200"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // Position information response | 职位信息返回体

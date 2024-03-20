@@ -62,6 +62,27 @@ func (tu *TokenUpdate) ClearStatus() *TokenUpdate {
 	return tu
 }
 
+// SetTenantID sets the "tenant_id" field.
+func (tu *TokenUpdate) SetTenantID(i int) *TokenUpdate {
+	tu.mutation.ResetTenantID()
+	tu.mutation.SetTenantID(i)
+	return tu
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (tu *TokenUpdate) SetNillableTenantID(i *int) *TokenUpdate {
+	if i != nil {
+		tu.SetTenantID(*i)
+	}
+	return tu
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (tu *TokenUpdate) AddTenantID(i int) *TokenUpdate {
+	tu.mutation.AddTenantID(i)
+	return tu
+}
+
 // SetUUID sets the "uuid" field.
 func (tu *TokenUpdate) SetUUID(u uuid.UUID) *TokenUpdate {
 	tu.mutation.SetUUID(u)
@@ -194,6 +215,12 @@ func (tu *TokenUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if tu.mutation.StatusCleared() {
 		_spec.ClearField(token.FieldStatus, field.TypeUint8)
 	}
+	if value, ok := tu.mutation.TenantID(); ok {
+		_spec.SetField(token.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := tu.mutation.AddedTenantID(); ok {
+		_spec.AddField(token.FieldTenantID, field.TypeInt, value)
+	}
 	if value, ok := tu.mutation.UUID(); ok {
 		_spec.SetField(token.FieldUUID, field.TypeUUID, value)
 	}
@@ -259,6 +286,27 @@ func (tuo *TokenUpdateOne) AddStatus(u int8) *TokenUpdateOne {
 // ClearStatus clears the value of the "status" field.
 func (tuo *TokenUpdateOne) ClearStatus() *TokenUpdateOne {
 	tuo.mutation.ClearStatus()
+	return tuo
+}
+
+// SetTenantID sets the "tenant_id" field.
+func (tuo *TokenUpdateOne) SetTenantID(i int) *TokenUpdateOne {
+	tuo.mutation.ResetTenantID()
+	tuo.mutation.SetTenantID(i)
+	return tuo
+}
+
+// SetNillableTenantID sets the "tenant_id" field if the given value is not nil.
+func (tuo *TokenUpdateOne) SetNillableTenantID(i *int) *TokenUpdateOne {
+	if i != nil {
+		tuo.SetTenantID(*i)
+	}
+	return tuo
+}
+
+// AddTenantID adds i to the "tenant_id" field.
+func (tuo *TokenUpdateOne) AddTenantID(i int) *TokenUpdateOne {
+	tuo.mutation.AddTenantID(i)
 	return tuo
 }
 
@@ -423,6 +471,12 @@ func (tuo *TokenUpdateOne) sqlSave(ctx context.Context) (_node *Token, err error
 	}
 	if tuo.mutation.StatusCleared() {
 		_spec.ClearField(token.FieldStatus, field.TypeUint8)
+	}
+	if value, ok := tuo.mutation.TenantID(); ok {
+		_spec.SetField(token.FieldTenantID, field.TypeInt, value)
+	}
+	if value, ok := tuo.mutation.AddedTenantID(); ok {
+		_spec.AddField(token.FieldTenantID, field.TypeInt, value)
 	}
 	if value, ok := tuo.mutation.UUID(); ok {
 		_spec.SetField(token.FieldUUID, field.TypeUUID, value)

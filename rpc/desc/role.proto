@@ -12,6 +12,7 @@ message RoleInfo {
   optional string default_router = 7;
   optional string remark = 8;
   optional uint32 sort = 9;
+  optional uint32 tenant_id = 10;
 }
 
 message RoleListResp {
@@ -25,6 +26,7 @@ message RoleListReq {
   optional string name = 3;
   optional string code = 4;
   optional string default_router = 5;
+  optional int32 tenant_id = 6;
 }
 
 

@@ -15,6 +15,7 @@ message DepartmentInfo {
   optional string email = 10;
   optional string remark = 11;
   optional uint64 parent_id = 12;
+  optional uint32 tenant_id = 13;
 }
 
 message DepartmentListResp {
@@ -27,6 +28,7 @@ message DepartmentListReq {
   uint64 page_size = 2;
   optional string name = 3;
   optional string leader = 4;
+  optional uint32 tenant_id = 5;
 }
 
 

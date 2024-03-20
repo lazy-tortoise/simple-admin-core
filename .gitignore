@@ -27,3 +27,5 @@ cusCMD
 
 core_api
 core_rpc
+/vendor/
+/api/go_build_core_api_go.exe

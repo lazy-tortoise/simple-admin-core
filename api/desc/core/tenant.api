@@ -1,0 +1,77 @@
+import "../base.api"
+
+type (
+    // The response data of tenant information | Tenant信息
+    TenantInfo {
+        BaseIDInfo
+
+        // Status 1: normal 2: ban | 状态 1 正常 2 禁用
+        Status  *uint32 `json:"status,optional"`
+
+        // Tenant ID | 租户ID
+        TenantId  *int64 `json:"tenantId,optional"`
+
+        // Tenant name | 租户名称
+        Name  *string `json:"name,optional"`
+    }
+
+    // The response data of tenant list | Tenant列表数据
+    TenantListResp {
+        BaseDataInfo
+
+        // Tenant list data | Tenant列表数据
+        Data TenantListInfo `json:"data"`
+    }
+
+    // Tenant list data | Tenant列表数据
+    TenantListInfo {
+        BaseListInfo
+
+        // The API list data | Tenant列表数据
+        Data  []TenantInfo  `json:"data"`
+    }
+
+    // Get tenant list request params | Tenant列表请求参数
+    TenantListReq {
+        PageInfo
+
+        // Name
+        Name  *string `json:"name,optional"`
+    }
+
+    // Tenant information response | Tenant信息返回体
+    TenantInfoResp {
+        BaseDataInfo
+
+        // Tenant information | Tenant数据
+        Data TenantInfo `json:"data"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: tenant
+    middleware: Authority
+)
+
+service Core {
+    // Create tenant information | 创建Tenant
+    @handler createTenant
+    post /tenant/create (TenantInfo) returns (BaseMsgResp)
+
+    // Update tenant information | 更新Tenant
+    @handler updateTenant
+    post /tenant/update (TenantInfo) returns (BaseMsgResp)
+
+    // Delete tenant information | 删除Tenant信息
+    @handler deleteTenant
+    post /tenant/delete (IDsReq) returns (BaseMsgResp)
+
+    // Get tenant list | 获取Tenant列表
+    @handler getTenantList
+    post /tenant/list (TenantListReq) returns (TenantListResp)
+
+    // Get tenant by ID | 通过ID获取Tenant
+    @handler getTenantById
+    post /tenant (IDReq) returns (TenantInfoResp)
+}

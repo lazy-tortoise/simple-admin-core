@@ -25,6 +25,9 @@ type (
 
         // Sort | 排序
         Sort *uint32 `json:"sort,optional" validate:"omitempty,lt=10000"`
+
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional" validate:"omitempty"`
     }
 
     // The response data of role list | 角色列表数据
@@ -49,6 +52,8 @@ type (
 
         // Name | 角色名称
         Name *string `json:"name,optional"`
+        // TenantId | 租户
+        TenantId *uint32 `json:"tenantId,optional"`
     }
 
     // Role information response | 角色信息返回体
